@@ -22,4 +22,12 @@ var items = document.getElementsByClassName('title');
 console.log(items);
 console.log(items[0]);
 items[0].style.color = "green";
-items[0].style.fontWeight="bold";
+items[0].style.fontWeight='bold';
+
+var item = document.getElementsByClassName('list-group-item');
+console.log(item);
+item[2].style.backgroundColor ='green';
+for(var i=0; i<item.length; i++)
+{
+    item[i].style.fontWeight = 'bold';
+}
