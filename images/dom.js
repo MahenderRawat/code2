@@ -17,17 +17,26 @@ console.log(headerTitle.innerText);
 headerTitle.innerHTML = '<h3>Hello</h>';    
 header.style.borderBottom = 'solid 3 px #000';
 
-//GETELEMENTSBYCLASSNAME//
+/*GETELEMENTSBYCLASSNAME//
 var items = document.getElementsByClassName('title');
 console.log(items);
 console.log(items[0]);
 items[0].style.color = "green";
-items[0].style.fontWeight='bold';
+items[0].style.fontWeight='bold';*/
 
-var item = document.getElementsByClassName('list-group-item');
-console.log(item);
-item[2].style.backgroundColor ='green';
-for(var i=0; i<item.length; i++)
+var li = document.getElementsByTagName('li');
+console.log(li);
+li[1].style.backgroundColor ='green';
+for(var i=0; i<li.length; i++)
 {
-    item[i].style.fontWeight = 'bold';
+    li[i].style.fontWeight = 'bold';
+}//
+
+//var item = document.getElementsByClassName('list-group-item');
+//onsole.log(item);
+li[2].style.backgroundColor ='skyblue';
+for(var i=0; i<li.length; i++)
+{
+    li[i].style.fontWeight = 'bold';
 }
+
