@@ -13,19 +13,31 @@
     </header>
 
     <section class="container">
-      <form id="my-form">
+      <form onsubmit="saveToLocalStorage(event)" id="my-form">
         <h1>Add User</h1>
         <div class="msg"></div>
         <div>
           <label for="name">Name:</label>
-          <input type="text" id="name">
+          <input type="text" id="name" name="username">
         </div>
         <div>
           <label for="email">Email:</label>
-          <input type="text" id="email">
+          <input type="text" id="email" name="emailId">
         </div>
         <input class="btn" type="submit" value="Submit">
       </form>
+
+      <script>
+        function saveToLocalStorage(event) {
+    event.preventDefault();
+    const name = event.target.username.value;
+    const email = event.target.emailId.value;
+
+    localStorage.setItem('name', name);
+    localStorage.setItem('email', email);
+}
+        src ="main1.js"
+      </script>
 
       <ul id="users"></ul>
 
@@ -37,6 +49,6 @@
     </section>
     
 
-    <script src="main1.js"></script>
+    
   </body>
 </html>
