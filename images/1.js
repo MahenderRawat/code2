@@ -1,52 +1,204 @@
-//CALL, APPLY AND BIND
+this.table = 'window table';
+console.log(window.table);
+const cleanTable = function(soap){
+    console.log(`cleaning ${this.table} using ${soap}`);
+};
 
-var obj  = {num: 2}
+cleanTable.call(this, 'some soap');
 
-var addToThis = function(a,b,c){
-    return this.num + a + b + c;
+
+this.garage = {
+    table: 'garage table',
+    cleanTable(){
+        console.log(`cleaning ${this.table}`)
+    }
+};
+
+console.log(window.garage.table);
+
+let johnsRoom = {
+    table: 'johns table',
+    cleanTable(){
+        console.log(`cleaning ${this.table}`)
+    }
+};
+
+console.log(this.johnsRoom.table)  it can't be accessed like this.
+
+console.log(johnsRoom.table);
+
+johnsRoom.cleanTable();
+this.garage.cleanTable();
+
+let createRoom = function(name){
+    this.table =`${name}s table`
 }
 
-console.log(addToThis.call(obj,3,4,5));
+createRoom.prototype.cleanTable = function(soap){
+    console.log(`cleaning ${this.table} using ${soap}`);
+};
 
-var arr = [1,3,5]
+const jillsRoom = new createRoom('jill');
+const johnsRoom = new createRoom('john');
 
-console.log(addToThis.apply(obj,arr));
-
-var bound = addToThis.bind(obj);
-
-console.log(bound(2,3,1));
-
-var student = {age: 20}
-
-var printAge = function(){
-    return this.age;
-}
+jillsRoom.cleanTable('some soap');
+johnsRoom.cleanTable('some soap');
 
 
-console.log(printAge.call(student));
+// USING CLASSES
 
-// CURRYING
-
-let multiply = function (x,y) {
-    console.log(x * y);
-}
-
-let multiplyByTwo = multiply.bind(this,2);
-
-multiplyByTwo(6);
-
-let multiplyByThree = multiply.bind(this,3);
-
-multiplyByThree(8);
-
-let mutiply = function(x){
-    return function(y){
-        console.log(x * y);
+class createRoom{
+    constructor(name){
+        this.table = `${name}s table`
+    }
+    cleanTable(soap){
+        console.log(`cleaning ${this.table} using ${soap}`);
     }
 }
 
-let mutiplyByTwo = mutiply(2);
-mutiplyByTwo(3);
+const jillsRoom = new createRoom('jill');
+const johnsRoom = new createRoom('john');
 
-let mutiplyByThree = mutiply(3);
-mutiplyByThree(4);
+jillsRoom.cleanTable('some soap');
+johnsRoom.cleanTable('some soap');
+
+// FAT ARROW FUNCTION
+
+"use strict"
+
+// var getA = function(a){
+//     return a;
+// }
+
+let getA = a => a;
+
+console.log(getA(1));
+
+// let square = a => a*a;
+
+
+let square = (a) => {return a*a};
+
+console.log(square(3));
+
+let multip = (a,b)  => {return a*b};
+
+console.log(multip(8,7));
+
+
+var x = function(){
+
+    this.val = 1;
+    setTimeout(() => {
+        this.val++;
+        console.log(this.val)
+    })
+};
+
+var xx = new x();
+
+var x = function(){
+    console.log(arguments[0])
+};
+
+x(1,2,3);
+
+by using fat arrow functions
+
+var y = (...n) => {
+    console.log(n[0]);
+};
+
+y(3,4,5);
+
+2nd deliverable
+
+class student{
+
+    static count=0;  //static variable to call
+
+    
+
+   constructor(name,age,pho_num,marks){
+
+       this.name=name;
+
+       this.age=age;
+
+       this.pho_num=pho_num;
+
+       this.marks=marks;
+
+       student.countStudent();
+
+   }
+
+   static countStudent(){
+
+       
+
+       return(student.count++);     //this is how u access static variable
+
+   }
+
+   eligible(){
+
+       if(this.marks >=40){
+
+           console.log(`${this.name} age ${this.age} is eligible`);
+
+       }
+
+       else if(this.marks<40){
+
+           console.log(`${this.name} age ${this.age} is not eligible`);
+
+       }
+
+    }
+
+    egligibleForPlacements(minAge){
+        
+       return (minMarks) => {
+
+        if(this.marks >= minMarks && this.age >= minAge){
+            console.log(`${this.name} is eligible for the placements`);
+        }
+        else{
+            console.log(`${this.name} is not eligible for the placements`);
+        }
+       }
+
+}
+}
+
+const Riya=new student('Riya',15,1234,34);
+
+const Hiya=new student('Hiya',18,2345,36);
+
+const Diya=new student('Diya',16,4567,60);
+
+const Siya=new student('Siya',17,7891,70);
+
+const Rooh=new student('Rooh',19,3456,80);
+
+console.log(student.countStudent());
+
+Riya.eligible();
+
+Hiya.eligible();
+
+Diya.eligible();
+
+Siya.eligible();
+
+Rooh.eligible();
+
+Riya.egligibleForPlacements(18)(36);
+Hiya.egligibleForPlacements(18)(36);
+Diya.egligibleForPlacements(18)(36);
+Siya.egligibleForPlacements(18)(36);
+Rooh.egligibleForPlacements(18)(36);
+
+
+
