@@ -26,7 +26,7 @@
                     phonenumber
                 }
 
-                axios.post("https://crudcrud.com/api/58f3305e254a428d91a174bb9a3c5124/appoinmentData", obj)
+                axios.post("https://crudcrud.com/api/725d900dd733432eb3d5adf02f2e357d/AppointmentData", obj)
                     .then((respone) => {
                         showNewUserOnScreen(respone.data)
                         console.log(respone)
@@ -40,7 +40,7 @@
             }
 
             window.addEventListener("DOMContentLoaded", ()=> {
-                axios.get("https://crudcrud.com/api/58f3305e254a428d91a174bb9a3c5124/appoinmentData")
+                axios.get("https://crudcrud.com/api/725d900dd733432eb3d5adf02f2e357d/AppointmentData")
                     .then((respone)=>{
                         for(var i=0; i< respone.data.length; i++){
                         showNewUserOnScreen(respone.data[i])
@@ -53,17 +53,6 @@
                 
             })
 
-            // window.addEventListener("DOMContentLoaded", ()=> {
-            //     const localStorageObj = localStorage;
-            //     const localstoragekeys = Object.keys(localStorageObj)
-
-            //     for(var i=0; i< localstoragekeys.length; i++){
-            //         const key = localstoragekeys[i]
-            //         const userDetailsString = localStorageObj[key];
-            //         const userDetailsObj = JSON.parse(userDetailsString);
-            //         showNewUserOnScreen(userDetailsObj)
-            //     }
-            // })
 
             function showNewUserOnScreen(user){
 
