@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="saveToLocalStorage(event)">
+        <label> Choose Price:</label>
+        <input id='price' type="number" name="dishPrice" required/>
+        <label> Choose Dish:</label>
+        <input id='dish' type="text" name="dishType" required/>
+        <label for="table">Choose a Table:</label>
+        <select name="tableName" id="table">
+            <option value="Table 1">Table 1</option>
+            <option value="Table 2">Table 2</option>
+            <option value="Table 3">Table 3</option>
+        </select>
+        <button> Add to Bill</button>
+    </form>
+    <h1>Orders</h1>
+    <h2>Table 1</h2>
+    <ul id="tableList1"></ul>
+
+    <h2>Table 2</h2>
+    <ul id="tableList2"></ul>
+
+    <h2>Table 3</h2>
+    <ul id="tableList3"></ul>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.6/axios.min.js"></script>
+        <script>
+            function saveToLocalStorage(event){
+                event.preventDefault();
+                const price = event.target.dishPrice.value;
+                const dish = event.target.dishType.value;
+                const table = event.target.tableName.value;
+             
+                const obj = {
+                    price,
+                    dish,
+                    table
+                }
+
+                axios.post("https://crudcrud.com/api/1a696b2a1bf74fcfbc03c16b8ff928be/orders", obj)
+                    .then((respone) => {
+                        showNewUserOnScreen(respone.data)
+                        console.log(respone)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
+
+            window.addEventListener("DOMContentLoaded", ()=> {
+                axios.get("https://crudcrud.com/api/1a696b2a1bf74fcfbc03c16b8ff928be/orders")
+                    .then((respone)=>{
+                        for(var i=0; i< respone.data.length; i++){
+                        showNewUserOnScreen(respone.data[i])
+                        console.log(respone)
+                        }
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                    })
+                
+            })
+
+
+            
+        function showNewUserOnScreen(user){
+
+          
+                document.getElementById('price').value ='';
+                document.getElementById('dish').value ='';
+                document.getElementById('table').value ='';
+               
+                const tableNumber = user.table.split(' ')[1];
+                const parentNode = document.getElementById(`tableList${tableNumber}`);
+
+                const childHTML = `<li id=${user._id}> ${user.price} - ${user.table} - ${user.dish}
+                                    <button onclick=deleteUser('${user._id}')> Delete Order </button>   
+                                </li>`
+
+                parentNode.innerHTML = parentNode.innerHTML + childHTML;
+            }
+
+            function deleteUser(userId){
+               axios.delete(`https://crudcrud.com/api/1a696b2a1bf74fcfbc03c16b8ff928be/orders/${userId}`) 
+                    .then((res)=>{
+                        removeUserFromScreen(userId)
+                    })
+                    .catch((err)=>{
+                        console.log(err);
+                    })
+            }
+
+            function removeUserFromScreen(user){
+                if (!user) {
+                return; // exit early if user is undefined
+                }
+                const tableNumber = user.table.split(' ')[0];
+                const parentNode = document.getElementById(`tableList${tableNumber}`)
+                const childNodeToBeDeleted = document.getElementById(user._id);
+                if(childNodeToBeDeleted){
+                parentNode.removeChild(childNodeToBeDeleted);
+                }
+                
+            }
+         </script>   
+    
+</body>
+</html>
