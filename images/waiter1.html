@@ -44,7 +44,7 @@
                     table
                 }
 
-                axios.post("https://crudcrud.com/api/1a696b2a1bf74fcfbc03c16b8ff928be/orders", obj)
+                axios.post("https://crudcrud.com/api/ae67483eaa1b4d598b5416694ae177fd/orders", obj)
                     .then((respone) => {
                         showNewUserOnScreen(respone.data)
                         console.log(respone)
@@ -55,7 +55,7 @@
             }
 
             window.addEventListener("DOMContentLoaded", ()=> {
-                axios.get("https://crudcrud.com/api/1a696b2a1bf74fcfbc03c16b8ff928be/orders")
+                axios.get("https://crudcrud.com/api/ae67483eaa1b4d598b5416694ae177fd/orders")
                     .then((respone)=>{
                         for(var i=0; i< respone.data.length; i++){
                         showNewUserOnScreen(respone.data[i])
@@ -88,7 +88,7 @@
             }
 
             function deleteUser(userId){
-               axios.delete(`https://crudcrud.com/api/1a696b2a1bf74fcfbc03c16b8ff928be/orders/${userId}`) 
+               axios.delete(`https://crudcrud.com/api/ae67483eaa1b4d598b5416694ae177fd/orders/${userId}`) 
                     .then((res)=>{
                         removeUserFromScreen(userId)
                     })
@@ -97,18 +97,12 @@
                     })
             }
 
-            function removeUserFromScreen(user){
-                if (!user) {
-                return; // exit early if user is undefined
+            function removeUserFromScreen(userId){
+                const userelement = document.getElementById(userId)
+                if(userelement){
+                    userelement.remove();
                 }
-                const tableNumber = user.table.split(' ')[0];
-                const parentNode = document.getElementById(`tableList${tableNumber}`)
-                const childNodeToBeDeleted = document.getElementById(user._id);
-                if(childNodeToBeDeleted){
-                parentNode.removeChild(childNodeToBeDeleted);
                 }
-                
-            }
          </script>   
     
 </body>
